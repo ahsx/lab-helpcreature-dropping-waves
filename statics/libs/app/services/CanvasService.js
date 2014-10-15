@@ -58,13 +58,7 @@ angular
 			var h;
 			while( n-- )
 			{
-				// amplitude 0 - 200
-				// 4 layers => height / 4
-
-				// h = (this.pixelHeight / 4 * n) + this.amplitude;
 				h = (this.pixelHeight/(m+1))*(m-n) |0;
-				console.log(this.layers[n].color, h);
-
 				this.layers[n].setSize( this.pixelWidth, h );
 			}
 
@@ -182,10 +176,10 @@ angular
 		 **/
 		this.update = function( options )
 		{
-			this.setSize( options.stageWidth, options.stageHeight );
 			this.setThickness( options.thickness );
 			this.setAmplitude( options.amplitude );
 			this.setFrequency( options.frequency );
+			this.setSize( options.stageWidth, options.stageHeight );
 		};		
 
 		/**
@@ -197,7 +191,6 @@ angular
 			while( n-- )
 			{
 				this.layers[n]
-					.compute()
 					.draw()
 			}
 		};
@@ -220,7 +213,7 @@ angular
 		 **/
 		function onTickHandler(event)
 		{
-			// this.draw();
+			this.draw();
 			this.stage.update();
 		}
 

@@ -10,6 +10,7 @@
 	{
 		this.color = color;
 		this.shape = new createjs.Shape();
+		this.list = [];
 		// this.shape.shadow = new createjs.Shadow("rgba(0, 0, 0, .3)", 0, 0, 20);
 	}
 
@@ -50,6 +51,28 @@
 		this.width = width;
 		this.height = height;
 
+		// creation logic
+		var length = (this.width / this.thickness) | 0;
+		var i = this.list.length;
+		var x, y, h, r;
+		var phase = this.utils.range(0, 1000); // phase angle
+		var originx = 0;
+		var originy = 0;
+
+		while( i++ < length )
+		{
+			x = i * this.thickness;
+			y = 0;
+			h = 0;
+
+			r = new createjs.Rectangle(x, 0, this.thickness, h);
+			console.log('create a rect');
+			this.list.push( r );		
+
+		}
+
+		this.compute();
+
 		return this;
 	}
 
@@ -62,6 +85,7 @@
 	p.setThickness = function( value )
 	{
 		this.thickness = value | 0;
+		this.compute();
 
 		return this;
 	}
@@ -75,6 +99,7 @@
 	p.setAmplitude = function( value )
 	{
 		this.amplitude = value | 0;
+		this.compute();
 
 		return this;
 	}
@@ -88,6 +113,7 @@
 	p.setFrequency = function( value )
 	{
 		this.frequency = value;
+		this.compute();
 
 		return this;
 	}
@@ -99,8 +125,6 @@
 	 **/
 	p.compute = function()
 	{
-		this.list = [];
-
 		var length = (this.width / this.thickness) | 0
 		var i = -1;
 		var r, x, y, h;
@@ -116,8 +140,16 @@
 			y = Math.sin(this.frequency * (x + phase)) * this.amplitude + originy;
 			h = this.height + y;
 
-			r = new createjs.Rectangle(x, 0, this.thickness, h);
-			this.list.push( r );
+			if (this.list[i])
+			{
+				TweenMax.to( this.list[i], 1, {width: this.thickness, height: h, overwrite:true});
+
+				this.list[i].x = x;
+				// this.list[i].width = this.thickness;
+				// this.list[i].height = h;
+			}
+
+			// this.list.push( r );
 		}
 
 		return this;
@@ -130,7 +162,6 @@
 	 **/
 	p.draw = function()
 	{
-		console.log('draw', this.thickness);
 		this.shape.graphics.clear();
 
 		var n = this.list.length;
@@ -159,13 +190,11 @@
 
 				this.shape.graphics
 									.beginFill( this.color )
-									// .beginStroke('#f00')
 									.moveTo( r.x, r.y )
 									.lineTo( r.x, r.y + r.height)
 									.arc( r.x+a, r.height, a, 0, Math.PI)
 									.lineTo( r.x + this.thickness, r.y + r.height )
 									.lineTo( r.x + this.thickness, r.y )
-									// .endStroke()
 									.endFill()
 									.closePath()
 				;
