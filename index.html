@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en" ng-app="lab" ng-controller="AppController">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- https://dribbble.com/shots/1764344-HelpCreature-Welcome-Email -->
+  <title>HelpCreature // Sinus Dropping Waves</title>
+  <meta name="description" content="This is the description of the template" />
+  <meta name="keywords" content="Help creature // Sinus Dropping Waves" />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:title" content="HelpCreature // Sinus Dropping Waves"/>
+  <meta property="og:url" content="http://github.com/ahsx/"/>
+  <meta property="og:site_name" content="HelpCreature // Sinus Dropping Waves"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:image" content="{{image}}"/>
+
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/statics/styles/vendors.css"/>
+  <link rel="stylesheet" href="/statics/styles/app.css"/>
+
+  <description 
+    title="HelpCreature"
+    subtitle="Sinus Dropping Waves"
+    url="http://github.com/ahsx/"
+  >This is the description of the template
+  </description>
+</head>
+<body class="defaultPage">
+  <sprite></sprite>
+
+  <div id="main" class="{{openSlide}}" ng-class="{open:open}">
+
+    <div class="alternate">
+      
+      <!-- Start::About -->
+      <article id="about" class="pane">
+        <div class="content">
+          <div class="clearfix">
+            <ul class="social left">
+              <li>
+                <a href="//facebook.com/sharer/sharer.php?u={{url}}" title="Facebook" target="_blank"><icon label="icon-facebook"></icon></a>
+              </li>
+              <li>
+                <a href="https://twitter.com/intent/tweet?original_referer={{url}}&text={{title}} /// {{subtitle}}&tw_p=tweetbutton&url={{url}}&via=beg_sleep&related=beg_sleep" title="Twitter" target="_blank"><icon label="icon-twitter"></icon></a>
+              </li>
+              <li>
+                <a href="mailto:?subject={{title}} /// {{subtitle}}&body={{url}}" title="Mail"><icon label="icon-paperplane"></icon></a>
+              </li>
+              <li>
+                <a href="#" title="Link" ng-click="saveToClipboard(url)"><icon label="icon-link"></icon></a>
+              </li>
+            </ul>
+
+            <h1 class="right">{{title}}</h1>
+            <h2 class="right">{{subtitle}}</h1>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+      </article>
+      <!-- End::About -->
+
+
+      <!-- Start::Options -->
+      <article id="options" class="pane">
+        <form class="content">
+          
+          <!-- global -->
+          <section>
+            <header class="green">Global</header>
+
+            <!-- Thickness -->
+            <range 
+              min="10" 
+              max="100" 
+              value="55" 
+              title="Thickness" 
+              model="options.thickness">
+            </range>
+
+            <!-- Amplitude -->
+            <range 
+              min="0" 
+              max="200" 
+              value="72" 
+              title="Amplitude" 
+              model="options.amplitude">
+            </range>
+            
+            <!-- Frequency -->
+            <range 
+              min="0" 
+              max="0.03" 
+              value="0.017" 
+              title="Frequency" 
+              step="0.001"
+              precision="3"
+              model="options.frequency">
+            </range>
+
+            <!-- Theme -->
+            <dropdown 
+              title="Theme" 
+              model="options.theme"
+            >
+              <option value="a" selected="selected">default</option>
+              <option value="b">default2</option>
+              <option value="c">default3</option>
+              <option value="d">default4</option>
+              <option value="e">default5</option>
+            </dropdown>
+
+            <!-- Random -->
+            <switch 
+              labelOn="oui" 
+              labelOff="non" 
+              on="true" 
+              title="random ?"
+              model="options.random"
+            >
+            </switch>
+
+          </section>
+
+          <section>
+            <header class="red">Stage</header>
+
+            <!-- width -->
+            <range 
+              min="10" 
+              max="100" 
+              value="80" 
+              title="Width (%)"
+              model="options.stageWidth"
+            ></range>
+
+            <!-- height -->
+            <range 
+              id="stageHeight" 
+              min="10" 
+              max="100" 
+              value="80" 
+              title="Height (%)"
+              model="options.stageHeight"
+            ></range>
+
+          </section>
+
+          <section>
+            <header class="blue">Controls</header>
+
+            <fieldset>
+              <div class="row controls">
+              <button class="reset field" type="button">reset</button>
+              <button 
+                href="{{saveURL}}" 
+                class="button save field" 
+                type="button" 
+                download="file.png" 
+                ng-click="saveCanvas()"
+                >save</button>
+              </div>
+            </fieldset>
+          </section>
+
+        </form>
+      </article>
+      <!-- End::Options -->
+    </div>
+    
+
+    <!-- Start::Pusher -->
+    <div class="pusher">
+
+      <!-- Start::Toolbar -->
+      <toolbar>
+        <toolbaritem href="#options" title="Options" icon="icon-font-cog">
+          <icon label="icon-cog"></icon>
+        </toolbaritem>
+
+        <toolbaritem href="#about" title="About" icon="icon-font-eye">
+          <icon label="icon-eye"></icon>
+        </toolbaritem>
+
+      </toolbar>
+      <!-- End::Toolbar -->
+
+
+      <!-- Start::Screenplay -->
+      <div id="screenplay" ng-controller="ScreenplayController">
+        <div class="legend">
+          <h1>{{title}} ///<em>{{subtitle}}</em></h1>
+        </div>
+
+        <div class="container">
+          
+          <div class="border">
+            <div class="cut topleft"></div>
+            <div class="cut topright"></div>
+            <div class="cut bottomright"></div>
+            <div class="cut bottomleft"></div>
+            <canvas id="display"></canvas>
+          </div>
+        </div>
+
+      </div>
+      <!-- End::Screenplay -->
+
+    </div>
+    <!-- End::Pusher -->
+
+  </div>
+    
+  <script type="text/javascript" src="/statics/libs/vendors/angular/angular.min.js"></script>
+  <script type="text/javascript" src="/statics/libs/vendors/angular-animate/angular-animate.min.js"></script>
+  <script type="text/javascript" src="/statics/libs/vendors/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="/statics/libs/vendors/jQuery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/statics/libs/vendors/easeljs/lib/easeljs-NEXT.min.js"></script>
+
+  <script type="text/javascript" src="/statics/libs/app.min.js"></script>
+</body>
+</html>
