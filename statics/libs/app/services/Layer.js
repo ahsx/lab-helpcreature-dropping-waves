@@ -6,12 +6,12 @@
 	 *
 	 *	@param color int
 	 **/
-	function Layer( color )
+	function Layer( color, name )
 	{
 		this.color = color;
+		this.name = name;
 		this.shape = new createjs.Shape();
 		this.list = [];
-		// this.shape.shadow = new createjs.Shadow("rgba(0, 0, 0, .3)", 0, 0, 20);
 	}
 
 	/** 
@@ -27,6 +27,20 @@
 	p.getDisplayObject = function()
 	{
 		return this.shape;
+	}
+
+	/**
+	 *	Define the color of the layer
+	 *
+	 *	@param value {Number}
+	 **/
+	p.setColor = function( value )
+	{
+		if ( this.color == value )
+			return;
+
+		TweenMax.to( this, 1, {colorProps:{color: value}});
+		// this.color = value;
 	}
 
 	/**
@@ -147,8 +161,10 @@
 		length = this.list.length - length;
 		while (i++ < length )
 		{
+			r = this.list[i];
+
 			TweenMax.to(
-				this.list[i],
+				r,
 				.3,
 				{
 					width: this.thickness,

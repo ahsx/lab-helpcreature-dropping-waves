@@ -3,14 +3,6 @@ angular
 	.service('CanvasService', ['Utils', function(Utils)
 	{
 		/**
-		 *	Colors used througout the app
-		 **/
-		this.darkPurple = "#563b8a";
-		this.lightPurple = "#a5468f";
-		this.pink = "#f17e93";
-		this.red = "#eb3549";
-
-		/**
 		 *	Return the url of the image of the canvas
 		 *
 		 *	@return {String}
@@ -126,14 +118,28 @@ angular
 			this.draw();
 		}
 
+		this.setTheme = function( value )
+		{
+			if ( this.theme == value )
+				return;
+
+			this.theme = value;
+			var n = this.layers.length;
+			while( n-- )
+			{
+				this.layers[n].setColor( this.theme.colors[n] );
+			}
+		}
+
 		/**
 		 *	Init the canvas
 		 *
 		 *	@param canvas JQueryElement
 		 *	@param container JQueryElement
 		 *	@param value Window
+		 *	@param theme Object
 		 **/
-		this.init = function( canvas, container, window )
+		this.init = function( canvas, container, window, theme )
 		{
 			this.canvas = jQuery(canvas);
 			this.context = canvas[0].getContext('2d');
@@ -143,6 +149,9 @@ angular
 			this.container = container;
 
 			this.window = jQuery(window).on('resize', onResizeHandler.bind(this));
+
+			this.theme = theme;
+
 			this.refresh();
 			this.create();
 		};
@@ -162,10 +171,10 @@ angular
 		this.create = function()
 		{
 			this.layers = [
-				addLayer.call( this, this.darkPurple ),
-				addLayer.call( this, this.lightPurple ),
-				addLayer.call( this, this.pink ),
-				addLayer.call( this, this.red )
+				addLayer.call( this, this.theme.colors[0], 'first' ),
+				addLayer.call( this, this.theme.colors[1], 'second' ),
+				addLayer.call( this, this.theme.colors[2], 'third' ),
+				addLayer.call( this, this.theme.colors[3], 'fours' )
 			];
 		};
 
@@ -180,6 +189,7 @@ angular
 			this.setAmplitude( options.amplitude );
 			this.setFrequency( options.frequency );
 			this.setSize( options.stageWidth, options.stageHeight );
+			this.setTheme( options.theme );
 		};		
 
 		/**
@@ -221,11 +231,12 @@ angular
 		 *	Add a new layer
 		 *
 		 *	@param color Number
+		 *	@param name String
 		 *	@return Layer
 		 **/
-		function addLayer( color )
+		function addLayer( color, name )
 		{
-			var l = new Layer( color );
+			var l = new Layer( color, name );
 			l.setUtils( Utils );
 			this.stage.addChild( l.getDisplayObject() );
 

@@ -30,7 +30,7 @@
 <body class="defaultPage">
   <sprite></sprite>
 
-  <div id="main" class="{{openSlide}}" ng-class="{open:open}">
+  <div id="main" class="options open {{openSlide}}" ng-class="{open:open}">
 
     <div class="alternate">
       
@@ -107,13 +107,9 @@
             <!-- Theme -->
             <dropdown 
               title="Theme" 
+              source="options.themes"
               model="options.theme"
             >
-              <option value="a" selected="selected">default</option>
-              <option value="b">default2</option>
-              <option value="c">default3</option>
-              <option value="d">default4</option>
-              <option value="e">default5</option>
             </dropdown>
 
             <!-- Random -->
@@ -223,6 +219,7 @@
   <script type="text/javascript" src="/statics/libs/vendors/jQuery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="/statics/libs/vendors/easeljs/lib/easeljs-NEXT.min.js"></script>
   <script type="text/javascript" src="/statics/libs/vendors/greensock/src/minified/TweenMax.min.js"></script>
+  <script type="text/javascript" src="/statics/libs/vendors/greensock/src/minified/plugins/ColorPropsPlugin.min.js"></script>
 
   <script type="text/javascript" src="/statics/libs/app.min.js"></script>
 </body>

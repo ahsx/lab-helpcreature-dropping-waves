@@ -9,6 +9,7 @@ angular
 			// terminal: true,
 			scope: {
 				title: '@',
+				source: '=',
 				value: '=model'
 			}, // {} = isolate, true = child, false/undefined = no change
 			// controller: function($scope, $element, $attrs, $transclude) {},
