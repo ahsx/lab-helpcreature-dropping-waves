@@ -50,27 +50,6 @@
 	{
 		this.width = width;
 		this.height = height;
-
-		// creation logic
-		var length = (this.width / this.thickness) | 0;
-		var i = this.list.length;
-		var x, y, h, r;
-		var phase = this.utils.range(0, 1000); // phase angle
-		var originx = 0;
-		var originy = 0;
-
-		while( i++ < length )
-		{
-			x = i * this.thickness;
-			y = 0;
-			h = 0;
-
-			r = new createjs.Rectangle(x, 0, this.thickness, h);
-			console.log('create a rect');
-			this.list.push( r );		
-
-		}
-
 		this.compute();
 
 		return this;
@@ -136,20 +115,47 @@
 
 		while( i++ < length )
 		{
+			r = this.list[i];
 			x = i * this.thickness;
 			y = Math.sin(this.frequency * (x + phase)) * this.amplitude + originy;
 			h = this.height + y;
+			if ( i & 1 )
+				h -= this.utils.range(this.thickness>>1, this.thickness<<1);
 
-			if (this.list[i])
+			// creation
+			if (!r)
 			{
-				TweenMax.to( this.list[i], 1, {width: this.thickness, height: h, overwrite:true});
-
-				this.list[i].x = x;
-				// this.list[i].width = this.thickness;
-				// this.list[i].height = h;
+				r = new createjs.Rectangle(x, 0, this.thickness, 0);
+				this.list.push( r );	
 			}
 
-			// this.list.push( r );
+			TweenMax.killTweensOf(r);
+			TweenMax.to( 
+				r, 
+				this.utils.range(.5, 4), 
+				{
+					width: this.thickness, 
+					height: h, 
+					ease: Strong.easeInOut
+				}
+			);
+
+			r.x = x;
+		}
+
+		// hide the rest
+		length = this.list.length - length;
+		while (i++ < length )
+		{
+			TweenMax.to(
+				this.list[i],
+				.3,
+				{
+					width: this.thickness,
+					height: 0,
+					ease: Strong.easeInOut
+				}
+			)
 		}
 
 		return this;
@@ -167,7 +173,6 @@
 		var n = this.list.length;
 		var r;
 		var a;
-		var o = this.thickness;
 		while (n--)
 		{
 			r = this.list[n];
@@ -178,8 +183,8 @@
 				this.shape.graphics
 									.beginFill( this.color )
 									.moveTo( r.x, r.y )
-									.lineTo( r.x, r.y + r.height-o)
-									.arc( r.x + a, r.height-o, a+1, Math.PI, 0)
+									.lineTo( r.x, r.y + r.height)
+									.arc( r.x + a, r.height, a+1, Math.PI, 0)
 									.lineTo( r.x+this.thickness, r.y )
 									.lineTo( r.x, r.y )
 									.endFill()
