@@ -16,14 +16,15 @@
   <meta property="og:type" content="article"/>
   <meta property="og:image" content="{{image}}"/>
 
-  <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'> -->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="/statics/styles/vendors.css"/>
   <link rel="stylesheet" href="/statics/styles/app.css"/>
 
   <description 
     title="HelpCreature"
     subtitle="Dropping Waves"
-    url="https://github.com/ahsx/lab-helpcreature-dropping-waves"
+    sources="https://github.com/ahsx/lab-helpcreature-dropping-waves"
+    demo="http://ahsx.github.io/lab-helpcreature-dropping-waves"
   >
   </description>
 </head>
@@ -40,16 +41,16 @@
           <div class="clearfix">
             <ul class="social left">
               <li>
-                <a href="//facebook.com/sharer/sharer.php?u={{url}}" title="Facebook" target="_blank"><icon label="icon-facebook"></icon></a>
+                <a href="//facebook.com/sharer/sharer.php?u={{demo}}" title="Facebook" target="_blank"><icon label="icon-facebook"></icon></a>
               </li>
               <li>
-                <a href="https://twitter.com/intent/tweet?original_referer={{url}}&text={{title}} /// {{subtitle}}&tw_p=tweetbutton&url={{url}}&via=beg_sleep&related=beg_sleep" title="Twitter" target="_blank"><icon label="icon-twitter"></icon></a>
+                <a href="https://twitter.com/intent/tweet?original_referer={{demo}}&text={{title}} /// {{subtitle}}&tw_p=tweetbutton&url={{demo}}&via=beg_sleep&related=beg_sleep" title="Twitter" target="_blank"><icon label="icon-twitter"></icon></a>
               </li>
               <li>
-                <a href="mailto:?subject={{title}} /// {{subtitle}}&body={{url}}" title="Mail"><icon label="icon-paperplane"></icon></a>
+                <a href="mailto:?subject={{title}} /// {{subtitle}}&body={{demo}}" title="Mail"><icon label="icon-paperplane"></icon></a>
               </li>
               <li>
-                <a href="#" title="Link" ng-click="saveToClipboard(url)"><icon label="icon-link"></icon></a>
+                <a href="#" title="Link" ng-click="saveToClipboard(demo)"><icon label="icon-link"></icon></a>
               </li>
             </ul>
 
@@ -57,10 +58,10 @@
             <h2 class="right">Dropping Waves</h1>
           </div>
           <p>
-From all times and all ages, the men considered the sea as an inspired muse whistling infinite inspiration. Literature, music, dance or even interior decoration displays plenty of examples. It is in Allan Grinshtein’s work that I've found not only the sweet smell of the sea, but sumptuous waves, even if these ones seem to fall from the sky.
+From all times and all ages, the men considered the sea as an inspired muse whistling infinite inspiration.Literature, music, dance or even interior decoration displays plenty of examples. It is in <a href="https://dribbble.com/Allan" target="_blank">Allan Grinshtein’s</a> work that I've found not only the sweet smell of the sea, but <a href="https://dribbble.com/shots/1764344-HelpCreature-Welcome-Email">sumptuous waves</a>, even if these ones seem to fall from the sky.</p>
 
-Let’s stop the divagation here, having no tangible evidence maybe the waves are in fact trees ?
-</p>
+          <p>Let’s stop the divagation here, having no tangible evidence maybe the waves are in fact trees ?</p>
+          <p>The original: <a href="https://dribbble.com/shots/1764344-HelpCreature-Welcome-Email">https://dribbble.com/shots/1764344-HelpCreature-Welcome-Email</a></p>
         </div>
       </article>
       <!-- End::About -->
@@ -211,5 +212,16 @@ Let’s stop the divagation here, having no tangible evidence maybe the waves ar
   <script type="text/javascript" src="/statics/libs/vendors/greensock/src/minified/plugins/ColorPropsPlugin.min.js"></script>
 
   <script type="text/javascript" src="/statics/libs/app.min.js"></script>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-439673-16', 'auto');
+    ga('send', 'pageview');
+
+  </script>
 </body>
 </html>
