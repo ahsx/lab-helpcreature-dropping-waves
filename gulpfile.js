@@ -84,6 +84,24 @@ var libs = [
 							,'statics/libs/app/filters/**/*.js'
 							,'statics/libs/app/services/**/*.js'
 		]
+	},
+	{
+		name:				"vendors",
+		output:				"statics/libs/",
+		sourceMap:			false,
+		lint:				false,
+		build:				'concat',
+		watch:				'statics/libs/app/**/*.js',
+		src:				
+		[
+							 'statics/libs/vendors/angular/angular.min.js'
+							,'statics/libs/vendors/angular-animate/angular-animate.min.js'
+							,'statics/libs/vendors/angular-ui-router/release/angular-ui-router.min.js'
+							,'statics/libs/vendors/jQuery/dist/jquery.min.js'
+							,'statics/libs/vendors/easeljs/lib/easeljs-NEXT.min.js'
+							,'./statics/libs/vendors/greensock/src/minified/TweenMax.min.js'
+							,'./statics/libs/vendors/greensock/src/minified/plugins/ColorPropsPlugin.min.js'
+		]
 	}
 ]
 

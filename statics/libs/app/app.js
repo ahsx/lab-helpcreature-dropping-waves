@@ -1,7 +1,7 @@
 APPNAME = 'lab'
 getPartial = function( path )
 {
-	return '/statics/partials/' + path;
+	return './statics/partials/' + path;
 } 
 
 angular
