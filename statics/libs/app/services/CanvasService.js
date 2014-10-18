@@ -9,7 +9,13 @@ angular
 		 **/
 		this.getURL = function()
 		{
-			return this.canvas[0].toDataURL('image/png').replace("image/png", "image/octet-stream");;
+			this.legend.visible = true;
+			this.draw();
+			this.stage.update();
+			var url = this.canvas[0].toDataURL('image/png').replace("image/png", "image/octet-stream");
+			this.legend.visible = false;
+
+			return url;
 		};
 
 		/**
@@ -118,6 +124,11 @@ angular
 			this.draw();
 		}
 
+		/**
+		 *	Define the theme
+		 *
+		 *	@param value Object
+		 **/
 		this.setTheme = function( value )
 		{
 			if ( this.theme == value )
@@ -132,6 +143,20 @@ angular
 		}
 
 		/**
+		 *	Define the application description
+		 *
+		 *	@param title {String}
+		 *	@param subtitle {String}
+		 **/
+		this.setDescription = function( title, subtitle )
+		{
+			this.title = title;
+			this.subtitle = subtitle;
+
+			this.legendLabel.text = "{title} /// {subtitle}".replace("{title}", this.title).replace("{subtitle}", this.subtitle).toUpperCase();
+		}
+
+		/**
 		 *	Init the canvas
 		 *
 		 *	@param canvas JQueryElement
@@ -141,19 +166,30 @@ angular
 		 **/
 		this.init = function( canvas, container, window, theme )
 		{
+			this.window = jQuery(window).on('resize', onResizeHandler.bind(this));
+			this.container = container;
 			this.canvas = jQuery(canvas);
 			this.context = canvas[0].getContext('2d');
 			this.stage = new createjs.Stage( canvas[0] );
 			createjs.Ticker.addEventListener("tick", onTickHandler.bind(this));
 
-			this.container = container;
-
-			this.window = jQuery(window).on('resize', onResizeHandler.bind(this));
+			// bg
+			this.stage.addChild( this.bg = new createjs.Shape() );
 
 			this.theme = theme;
 
 			this.refresh();
 			this.create();
+			
+			// legend
+			this.stage.addChild( this.legend = new createjs.Container() );
+			this.legend.visible = false;
+			this.legend.addChild( this.legendBg = new createjs.Shape() );
+			this.legend.addChild( this.legendLabel = new createjs.Text() );
+			this.legendLabel.font = '400 2.5em Open Sans';
+			this.legendLabel.color = "#fff";
+
+			// resize
 		};
 
 		/**
@@ -197,6 +233,23 @@ angular
 		 **/
 		this.draw = function()
 		{
+			// bg
+			this.bg.graphics.clear().beginFill('#fff').drawRect(0, 0, this.pixelWidth, this.pixelHeight).endFill();
+
+			// legend
+			var w = this.legendLabel.getMeasuredWidth() + 60;
+			var h = this.legendLabel.getMeasuredHeight() + 25;
+			this.legendBg.graphics
+							.clear()
+							.beginFill("#000")
+							.drawRect(0, 0, w, h)
+							.endFill();
+			this.legendLabel.x = 30;
+			this.legendLabel.y = 10;
+			this.legend.x = 130 - 70;
+			this.legend.y = this.windowHeight - 30 - h - 20;
+
+			// layers
 			var n = this.layers.length;
 			while( n-- )
 			{
